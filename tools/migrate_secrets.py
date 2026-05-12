@@ -20,7 +20,7 @@ def migrate_secrets(source_repo, target_repo, env_file=".env"):
         print(f"Error: {env_file} not found.")
         return
 
-    print(f"🚀 Migrating secrets to {target_repo} using {env_file}...")
+    print(f"Migrating secrets to {target_repo} using {env_file}...")
 
     # Define which keys from .env should be uploaded as secrets
     secret_keys = [
@@ -69,7 +69,7 @@ def migrate_secrets(source_repo, target_repo, env_file=".env"):
     result = run_command(cmd)
     
     if result is not None:
-        print("✅ Secrets migrated successfully!")
+        print("Secrets migrated successfully!")
     
     # Clean up
     if os.path.exists(temp_secrets_path):
