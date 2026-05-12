@@ -210,16 +210,26 @@ def build_caption(
     else:
         category = classify_caption(body)
 
-    pre_hook = random.choice(_PRE_HOOKS[category])
-    hook = random.choice(_HOOKS[category])
-    hashtags = _HASHTAGS[category]
+    # Instagram hard limit is 2,200 characters.
+    # We'll target 2,100 to leave a safe buffer for emojis and special chars.
+    MAX_LEN = 2100
+    
+    # Estimate fixed lengths
+    fixed_parts = f"{pre_hook}\n\n{hook}\n\n\n\n{hashtags}"
+    if add_credit:
+        fixed_parts += f"\n\nVia @{credit_handle} 🎬"
+        
+    remaining_space = MAX_LEN - len(fixed_parts)
+    
+    if len(body) > remaining_space:
+        body = body[:remaining_space - 3] + "..."
 
     parts = [
-        pre_hook,    # "🔥 Comment if you can do this move!"
+        pre_hook,
         "",
-        hook,        # "This transition is EVERYTHING ✨"
+        hook,
         "",
-        body,        # original caption (cleaned)
+        body,
         "",
         hashtags,
     ]
