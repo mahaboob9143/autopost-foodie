@@ -214,6 +214,10 @@ def build_caption(
     # We'll target 2,100 to leave a safe buffer for emojis and special chars.
     MAX_LEN = 2100
     
+    pre_hook = random.choice(_PRE_HOOKS[category])
+    hook = random.choice(_HOOKS[category])
+    hashtags = _HASHTAGS[category]
+
     # Estimate fixed lengths
     fixed_parts = f"{pre_hook}\n\n{hook}\n\n\n\n{hashtags}"
     if add_credit:
