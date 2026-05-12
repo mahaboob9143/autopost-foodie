@@ -1,0 +1,83 @@
+# ============================================================
+# InstaAgent — Runtime Configuration (Serverless Repost Mode)
+# Niche: Travel & Adventure (@karadenizli.maceraci)
+# ============================================================
+
+# ── Cloudinary Uploads ────────────────────────────────────────
+image_server:
+  use_cloudinary: true # Uploads to Cloudinary (free, stable public URL)
+
+# ── Facebook Page ──────────────────────────────────────────────
+facebook:
+  enabled: false                # Paused — YouTube posting is now active
+  page_name: "Travel & Food"    # For reference only — not used in code
+
+# ── YouTube Channel ──────────────────────────────────────────
+youtube:
+  enabled: true                 # Set false to stop posting to YouTube
+  # Video will be published as a YouTube Short (portrait, ≤ 3 min)
+  # Shorts are auto-detected by YouTube based on orientation + duration.
+  # Adding #Shorts to the title (done automatically) boosts discovery.
+  category_id: 19               # 19 = Travel & Events
+  tags:                         # Tags applied to every uploaded Short
+    - Shorts
+    - Travel
+    - Adventure
+    - Nature
+    - Turkey
+    - Explore
+    - Outdoor
+    - TravelReels
+    - ViralReels
+    - Wanderlust
+    - NatureReels
+    - TravelShorts
+    - Hiking
+    - Karadeniz
+
+# ── Repost Agent ──────────────────────────────────────────────
+# Scrapes/reposts travel & adventure reels from public accounts
+# with a rewritten caption. Triggered by GitHub Actions via: main.py --repost
+repost:
+  enabled: true
+  auto_scrape_enabled: false      # Set true to scrape autonomously; false to rely solely on Google Sheets
+  source_accounts:
+    - karadenizli.maceraci        # Public IG accounts to scrape content from
+  max_posts_to_check: 12          # How many recent posts to scan per run (keep low to avoid rate limits)
+  include_reels: true             # Set true to also scrape & repost Reels (videos)
+  download_dir: media/reposts     # Local download directory (cleaned up automatically)
+  post_to_story: true             # Also post the media to your Instagram Story
+  collaborators: []               # (Optional) List of usernames to invite as collaborators
+  add_credit_line: false          # No credit line
+
+# ── Caption Generation ────────────────────────────────────────
+caption:
+  language: en                 # English only
+  max_hashtags: 25
+
+  # Fallback templates used by the rule-based engine
+  fallback_templates:
+    - |
+      Drop a 🏔️ if you'd go here right now!
+
+      Some places make you forget everything else — this is one of them 🌿
+
+      Save this for your next adventure 📌
+
+      {hashtags}
+    - |
+      Tag someone you'd explore this with 👇
+
+      The world is too beautiful to stay in one place ✈️
+
+      Follow for more travel & nature reels! 🌍
+
+      {hashtags}
+    - |
+      Comment 🌊 if this took your breath away!
+
+      Nature never disappoints — and this view is proof 🔥
+
+      Share this with your adventure buddy 🏕️
+
+      {hashtags}
